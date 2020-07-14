@@ -23,13 +23,23 @@ app.post("/first", (request, response) => {
                 response.status(200).json(arg1 * arg2);
                 break;
             case '/':
+                if(arg2 != 0){
                 response.status(200).json(arg1 / arg2);
+                } else {
+                    response.status(400).json('Ошибка, деление на нуль невозможно.');
+                }
+                
                 break;
             case '**':
                 response.status(200).json(Math.pow(arg1 , arg2));
                 break;
             case '%':
-                response.status(200).json(arg1 + ' % от ' + arg2 + ' = ' + arg1 * (arg2/100));
+                if(arg1 >= 0 && arg2 >=0){
+                //response.status(200).json(arg1 + ' % от ' + arg2 + ' = ' + arg1 * (arg2/100));
+                response.status(200).json(arg1 * (arg2/100));
+                } else {
+                    response.status(400).json('Требуется положительное значение');
+                }
                 break;
             default: 
                 response.status(400).json('Ошибка: неверная команда. + сложение, - вычитание, * умножение, / деление, ** возведение в степень, % взятие процента.'); 
@@ -46,7 +56,11 @@ app.post("/second", (request, response) => {
     
         switch (oper){
             case 'v':
+                if (arg > 0){
                 response.status(200).json(Math.sqrt(arg));
+                } else {
+                    response.status(400).json('Требуется положительное значение');
+                }
                 break;
             case 'sin':
                 response.status(200).json(Math.sin(arg));
@@ -69,5 +83,5 @@ app.post("/second", (request, response) => {
         response.status(400).json('Ошибка: введите число');
     } 
 });
-
+module.exports = app;
         app.listen(2121);
